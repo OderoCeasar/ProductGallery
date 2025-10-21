@@ -23,7 +23,7 @@ def product_create(request):
             return redirect('product_list')
     else:
         form = ProductForm()
-    return render(request, 'products/product_form.html', {'form': form, 'action': 'Add'})
+    return render(request, 'products/product_form.html', {'form': form, 'action': 'Create'})
 
 # update products
 def product_update(request, pk):
@@ -44,7 +44,7 @@ def product_update(request, pk):
             'description': product.description,
             'price': product.price
         })
-    return render(request, 'products/product_form.html', {'form': form, 'action': 'Edit'})
+    return render(request, 'products/product_form.html', {'form': form, 'action': 'Update'})
 
 # delete products
 def product_delete(request, pk):
