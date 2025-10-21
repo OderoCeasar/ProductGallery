@@ -82,11 +82,11 @@ DATABASES = {
     }
 }
 
-#connect mongodb
+#Mongodb connection
 connect(
-    db="product_gallery_db",
-    host="host='mongodb://localhost:27017/product_gallery_db",
-    )
+    db='product_gallery',
+    host='mongodb://localhost:27017/product_gallery'
+)
 
 
 # Password validation
