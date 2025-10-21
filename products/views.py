@@ -5,7 +5,7 @@ from .forms import ProductForm
 # read products
 def product_list(request):
     products = Product.objects.all()
-    return render(request, 'product_app/product_list.html', {'products': products})
+    return render(request, 'products/product_list.html', {'products': products})
 
 # Create new product
 def product_create(request):
@@ -16,7 +16,7 @@ def product_create(request):
             return redirect('product_list')
     else:
         form = ProductForm()
-    return render(request, 'product_app/product_form.html', {'form': form})
+    return render(request, 'products/product_form.html', {'form': form})
 
 # update producr
 def product_update(request, pk):
@@ -28,7 +28,7 @@ def product_update(request, pk):
             return redirect('product_list')
     else:
         form = ProductForm(instance=product)
-    return render(request, 'product_app/product_update.html', {'form': form, 'product': product})
+    return render(request, 'products/product_update.html', {'form': form, 'product': product})
 
 # delete product
 def product_delete(request, pk):
@@ -36,4 +36,4 @@ def product_delete(request, pk):
     if request.method == 'POST':
         product.delete()
         return redirect('product_list')
-    return render(request, 'product_app/product_confirm_delete.html', {'product': product})
+    return render(request, 'products/product_confirm_delete.html', {'product': product})
