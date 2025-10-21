@@ -1,12 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product
 from .forms import ProductForm
 
+# Show all products
 def product_list(request):
     products = Product.objects.all()
     return render(request, 'products/product_list.html', {'products': products})
 
-#create product
+# create products
 def product_create(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
@@ -22,12 +23,11 @@ def product_create(request):
             return redirect('product_list')
     else:
         form = ProductForm()
-    return render(request, 'products/product_form.html', {'form': form})
+    return render(request, 'products/product_form.html', {'form': form, 'action': 'Add'})
 
-
-#update product
-def product_update(request, product_id):
-    product = Product.objects.get(id=product_id)
+# update products
+def product_update(request, pk):
+    product = get_object_or_404(Product, id=pk)
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
@@ -44,11 +44,12 @@ def product_update(request, product_id):
             'description': product.description,
             'price': product.price
         })
-    return render(request, 'products/product_form.html', {'form': form})
+    return render(request, 'products/product_form.html', {'form': form, 'action': 'Edit'})
 
-
-#delete product
-def product_delete(request, product_id):
-    product = Product.objects.get(id=product_id)
-    product.delete()
-    return redirect('product_list')
+# delete products
+def product_delete(request, pk):
+    product = get_object_or_404(Product, id=pk)
+    if request.method == 'POST':
+        product.delete()
+        return redirect('product_list')
+    return render(request, 'products/product_confirm_delete.html', {'product': product})
