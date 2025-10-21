@@ -1,9 +1,10 @@
 from django.db import models
-from mongoengine import Document, StringField, FileField, FloatField
 
-# Create your models here.
-class Product(Document):
-    name = StringField(required=True, max_length=100)
-    description = StringField(required=True, max_length=255)
-    price = FloatField(required=True)
-    image = FileField(required=False)
+class Product(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    price = models.FloatField()
+    image = models.ImageField(upload_to='product_images/', blank=True, null=True)
+
+    def __str__(self):
+        return self.name
